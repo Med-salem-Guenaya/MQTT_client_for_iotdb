@@ -6,6 +6,7 @@ import org.fusesource.mqtt.client.QoS;
 
 import java.net.URISyntaxException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -28,6 +29,10 @@ public class Main {
                     "}", System.currentTimeMillis(), random.nextDouble());
 
             connection.publish("root.sg.d1.s1", payload.getBytes(), QoS.AT_LEAST_ONCE, false);
+
+            // used a timer to make data transmission/collection spread out
+            TimeUnit.SECONDS.sleep(1);
+            // should be replaced with a better solution, like "ScheduledExecutorService"
         }
 
         connection.disconnect();
